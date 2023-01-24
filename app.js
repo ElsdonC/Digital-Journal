@@ -12,7 +12,7 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 mongoose.set('strictQuery', false);
-mongoose.connect("mongodb+srv://elsdonc:zoCj8ujLnqsJPjhA@cluster0.pa17gqm.mongodb.net/journalDB");
+mongoose.connect("mongodb+srv://admin-elsdon:123@cluster0.pa17gqm.mongodb.net/blogDB");
 const postSchema = {
   title: String,
   content: String
@@ -52,8 +52,20 @@ app.post("/compose", function(req, res){
   });
 });
 
+app.post("/delete", function(req,res){  
+  const entryName = req.body.button;
+
+  Post.findOneAndDelete({title: entryName}, function(err){
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect("/");
+    }
+  })
+})
+
 app.get("/posts/:postId", function(req, res){
-  const requestedPostId = _.lowerCase(req.params.postId);
+  const requestedPostId = req.params.postId;
 
   Post.findOne({_id: requestedPostId}, function(err, post){
     res.render("post", {

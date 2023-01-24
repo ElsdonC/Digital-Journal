@@ -1,5 +1,7 @@
 <%- include("partials/header"); -%>
-
+  <form action="/delete" method="post">
+    <button name="button" type="submit" value="<%=title%>">Delete Journal Entry</button>
+  </form>
   <h1><%=title%></h1>
   <p><%=content%></p>
 
